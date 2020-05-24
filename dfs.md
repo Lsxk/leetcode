@@ -57,7 +57,7 @@ dfs适用于***是否有解***的问题，bfs适用与***最短路径***问题
 
 3. 如果需要遍历出所有的路径，就需要***回溯***
 
-   典型题：全排列
+   典型题：[全排列](array/全排列/Solution.java)
 
    ```java
    private void dfs(int[] nums, int len, int depth,
