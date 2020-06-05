@@ -18,15 +18,25 @@ public class Solution {
         int length = nums.length;
         sum = sum / 2;
 
-        boolean[][] dp = new boolean[length + 1][sum];
+        boolean[][] dp = new boolean[length][sum + 1];
+        for (int i = 0; i < length; i++) {
+            dp[i][0] = true;
+        }
 
-        for (int i = 1; i < length + 1; i++) {
+
+        for (int i = 1; i < length; i++) {
             for (int j = 1; j <= sum; j++) {
 
-                if (j < nums[i])
+                if (j < nums[i]) {
+                    dp[i][j] = dp[i-1][j];
+                }
+                else {
+                    dp[i][j] = dp[i-1][j-nums[i]] | dp[i-1][j];
+                }
 
             }
         }
+        return dp[length - 1][sum];
 
     }
 }
