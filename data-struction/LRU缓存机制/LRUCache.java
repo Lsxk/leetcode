@@ -9,7 +9,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2020-06-12
  */
-public class Solution {
+public class LRUCache {
 
     Map<Integer, Node> value = new HashMap<>();
 

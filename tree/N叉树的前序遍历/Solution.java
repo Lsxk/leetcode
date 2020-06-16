@@ -2,6 +2,7 @@ package N叉树的前序遍历;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Solution {
     public List<Integer> preorder(Node root) {
@@ -25,5 +26,14 @@ public class Solution {
         }
         return res;
 
+    }
+
+    class Node {
+        public int val;
+
+        public List<Node> children;
+
+        public Node() {
+        }
     }
 }
