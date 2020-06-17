@@ -76,22 +76,21 @@ def backtrack(路径, 选择列表):
 ```
 
 ###### DFS套路
-> DFS属于回溯算法在树上的应用，重点需要设定递归返回值得含义
+> DFS属于回溯算法在树上的应用，重点需要设定递归返回值的含义
 ```
-public Res dfs(TreeNode node) {
-        if (node == null) {
-            return new Res(0, 0);
-        }
-        
-        // 先计算子节点，为自底向上
-        Res left = dfs(node.left);
-        Res right = dfs(node.right);
-
-        int curSum = node.val + left.curSum + right.curSum;
-        int curSize = 1 + left.curSize + right.curSize;
-
-        max = Math.max(max, (float) curSum / curSize);
-
-        return new Res(curSum, curSize);
+Res dfs(TreeNode node) {
+    if (node == null) {
+        return new Res(0, 0);
     }
+
+    Res left = dfs(node.left);
+    Res right = dfs(node.right);
+
+    int curSum = node.val + left.curSum + right.curSum;
+    int curSize = 1 + left.curSize + right.curSize;
+
+    max = Math.max(max, (float) curSum / curSize);
+
+    return new Res(curSum, curSize);
+}
 ```
