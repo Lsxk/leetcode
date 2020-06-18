@@ -8,7 +8,7 @@ package 反转链表2;
  */
 public class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        if (head == n) {
+        if (head == null) {
             return null;
         }
 
@@ -22,7 +22,7 @@ public class Solution {
         }
 
         // pre为m的前驱
-        ListNode cur = pre.next
+        ListNode cur = pre.next;
 
         for (int i = m; i < n; i++) {
             ListNode next = cur.next;
