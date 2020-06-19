@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Solution {
     public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[1]);
+        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
         int[][] res = new int[intervals.length][2];
         int idx = -1;
         for (int[] a : intervals) {

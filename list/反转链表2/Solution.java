@@ -2,7 +2,7 @@ package 反转链表2;
 
 /**
  * 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。
- *
+ * <p>
  * 说明:
  * 1 ≤ m ≤ n ≤ 链表长度。
  */
@@ -12,35 +12,38 @@ public class Solution {
             return null;
         }
 
-        int start = 1;
-        ListNode startNode = head;
-        while (start < m - 1) {
-            startNode = startNode.next;
-            start++;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode pre = dummy;
+
+        for (int i = 1; i < m; i++) {
+            pre = pre.next;
         }
 
-        startNode.next = reverseList(startNode.next);
+        // pre为m的前驱
+        ListNode cur = pre.next;
 
-        return head;
+        for (int i = m; i < n; i++) {
+            ListNode next = cur.next;
 
-    }
-
-    public ListNode reverseList(ListNode head) {
-
-        ListNode prev = null;
-        ListNode curr = head;
-        if (curr != null) {
-            ListNode nextTemp = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextTemp;
+            cur.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
         }
-        return prev;
+
+        return dummy.next;
+
+
     }
 
     public class ListNode {
         int val;
+
         ListNode next;
-        ListNode(int x) { val = x; }
+
+        ListNode(int x) {
+            val = x;
+        }
     }
 }

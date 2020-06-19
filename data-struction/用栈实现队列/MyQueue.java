@@ -11,7 +11,7 @@ import java.util.Stack;
  * empty() -- 返回队列是否为空
  *
  */
-public class Solution {
+public class MyQueue {
     /** Initialize your data structure here. */
     private Stack<Integer> head = new Stack<>();
 
