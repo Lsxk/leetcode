@@ -51,7 +51,7 @@ public class Solution {
                             break;
                         }
                         else {
-                            left = mid + 1
+                            left = mid + 1;
                         }
                     }
 

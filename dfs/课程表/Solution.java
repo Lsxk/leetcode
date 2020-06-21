@@ -52,7 +52,7 @@ public class Solution {
         }
 
         flags[i] = 1;
-        
+
         for (int j = 0; j < adj.get(i).size(); j++) {
             if (dfs(adj, adj.get(i).get(j), flags)) {
                 return true;
