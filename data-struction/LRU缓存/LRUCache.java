@@ -3,7 +3,7 @@ package LRU缓存;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Solution {
+public class LRUCache {
 
     private int capacity;
 

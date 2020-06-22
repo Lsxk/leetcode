@@ -3,7 +3,7 @@ package 用队列实现栈;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Solution {
+public class MyStack {
     /** Initialize your data structure here. */
     Queue<Integer> pushQueue = new LinkedBlockingQueue<>();
 
