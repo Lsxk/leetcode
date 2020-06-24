@@ -3,24 +3,31 @@ package 无重复字符的最长子串;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 滑动窗口
+ *
+ */
 public class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        // 滑动窗口
-        int n = s.length();
-        Set<Character> set = new HashSet<>();
 
-        int i = 0;
-        int j = 0;
-        int res = 0;
-        while (i < n & j < n) {
-            if (!set.contains(s.charAt(j))) {
-                set.add(s.charAt(j++));
-                res = Math.max(res, j - i);
-            }
-            else {
-                set.remove(s.charAt(i++));
+    public int lengthOfLongestSubstring(String s) {
+        int maxLength = 0;
+        int left = 0;
+        int right = 0;
+
+        Set<Character> window = new HashSet<>();
+
+        while (right < s.length()) {
+
+            if (!window.contains(s.charAt(right))) {
+                window.add(s.charAt(right));
+                maxLength = Math.max(maxLength, right - left + 1);
+                right++;
+            } else {
+                //收缩窗口
+                window.remove(s.charAt(left));
+                left++;
             }
         }
-        return res;
+        return maxLength;
     }
 }
