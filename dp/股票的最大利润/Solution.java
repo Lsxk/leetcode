@@ -6,6 +6,6 @@ package 股票的最大利润;
  */
 public class Solution {
     public int maxProfit(int[] prices) {
-
+        return 1;
     }
 }
