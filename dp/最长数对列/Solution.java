@@ -1,7 +1,6 @@
 package 最长数对列;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * 功能描述：
@@ -11,13 +10,19 @@ import java.util.Comparator;
  * <p>
  * 给定一个对数集合，找出能够形成的最长数对链的长度。你不需要用到所有的数对，你可以以任何顺序选择其中的一些数对来构造。
  * <p>
- * 使用1排序，转换为求最长递增子序列问题
+ * 最长递增子序列问题
+ * <p>
+ * dp[i] = Math.max(dp[i], dp[j] + 1), nums[j] < num[i]   j < i
  *
  * @version 1.0.0
  * @since 2020-06-24
  */
 public class Solution {
     public int findLongestChain(int[][] pairs) {
+        if (pairs.length == 0) {
+            return 0;
+        }
+
         Arrays.sort(pairs, (o1, o2) -> {
             int temp = o1[0] - o2[0];
             if (temp == 0) {
@@ -25,5 +30,23 @@ public class Solution {
             }
             return temp;
         });
+
+        int ans = 0;
+
+        int[] dp = new int[pairs.length];
+
+        dp[0] = 1;
+
+        for (int i = 1; i < pairs.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (pairs[i][0] > pairs[j][1]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+
+            ans = Math.max(dp[i], ans);
+        }
+
+        return Math.max(1, ans);
     }
 }
