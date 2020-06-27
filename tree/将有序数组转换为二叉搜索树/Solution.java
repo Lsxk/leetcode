@@ -8,6 +8,7 @@ package 将有序数组转换为二叉搜索树;
 public class Solution
 {
     public TreeNode sortedArrayToBST(int[] nums) {
+
         if (nums == null || nums.length == 0) {
             return null;
         }
