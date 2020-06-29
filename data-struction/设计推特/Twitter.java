@@ -2,9 +2,11 @@ package 设计推特;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * 功能描述：
@@ -18,19 +20,20 @@ import java.util.Map;
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/design-twitter
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- *
- *
+ * <p>
+ * <p>
  * 单纯使用一个队列存 推特，会超时
- *
  *
  * @version 1.0.0
  * @since 2020-06-29
  */
 public class Twitter {
 
-    LinkedList<T> tweetIds = new LinkedList<>();
+    Map<Integer, Set<Integer>> f = new HashMap<>();
 
-    Map<Integer, List<Integer>> f = new HashMap<>();
+    Map<Integer, Tw> t = new HashMap<>();
+
+    int time = 0;
 
     /**
      * Initialize your data structure here.
@@ -43,28 +46,52 @@ public class Twitter {
      * Compose a new tweet.
      */
     public void postTweet(int userId, int tweetId) {
-        tweetIds.addLast(new T(userId, tweetId));
+        if (t.containsKey(userId)) {
+            Tw tw = t.get(userId);
+
+            Tw head = new Tw(tweetId);
+            head.next = tw;
+
+            t.put(userId, head);
+        } else {
+            t.put(userId, new Tw(tweetId));
+        }
     }
 
     /**
      * Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
      */
     public List<Integer> getNewsFeed(int userId) {
-        List<Integer> fo = f.getOrDefault(userId, new ArrayList<>());
+        //多路归并
 
         List<Integer> ans = new ArrayList<>();
 
-        for (int i = tweetIds.size() - 1; i >= 0; i--) {
+        PriorityQueue<Tw> queue = new PriorityQueue<>((o1, o2) -> (int) (o2.time - o1.time));
 
-            T t = tweetIds.get(i);
-            if (t.userId == userId || fo.contains(t.userId)) {
-                ans.add(t.tId);
+        Set<Integer> ff = f.getOrDefault(userId, new HashSet<>());
+        ff.add(userId);
+
+        ff.forEach(userId1 -> {
+            int i = 0;
+            Tw tw = t.get(userId1);
+            if (tw != null) {
+                while (i < 10 && tw != null) {
+
+                    queue.offer(tw);
+                    tw = tw.next;
+                    i++;
+                }
             }
-            if (ans.size() == 10) {
-                return ans;
-            }
+
+        });
+
+        int i = 0;
+        while (i < 10 && !queue.isEmpty()) {
+            ans.add(queue.poll().id);
         }
+
         return ans;
+
     }
 
     /**
@@ -77,7 +104,7 @@ public class Twitter {
         if (f.containsKey(followerId)) {
             f.get(followerId).add(followeeId);
         } else {
-            f.put(followerId, new ArrayList<Integer>() {{
+            f.put(followerId, new HashSet<Integer>() {{
                 add(followeeId);
             }});
         }
@@ -93,17 +120,19 @@ public class Twitter {
         if (!f.containsKey(followerId)) {
             return;
         }
-        f.get(followerId).remove(Integer.valueOf(followeeId));
+        f.get(followerId).remove(followeeId);
     }
 
-    class T {
-        int userId;
+    class Tw {
+        int id;
 
-        int tId;
+        long time;
 
-        public T(int userId, int tId) {
-            this.userId = userId;
-            this.tId = tId;
+        Tw next;
+
+        public Tw(int id) {
+            this.id = id;
+            this.time = Twitter.time++;
         }
     }
 }
